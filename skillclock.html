@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="skillclock.css">
+</head>
+
+<body>
+    <h1>Skill Clock</h1>
+    <div id="clockGraphic"></div>
+    <div id="timedSkills">
+        <form id="typedWords"><input id="skillAdded" type="text" placeholder="enter a skill to learn" name="newskill">
+            <button id="add">Add skill!</button>
+        </form>
+        <ul class="skillList">
+        </ul>
+        <div id="savedTime"></div>
+        <button id="remove">Remove from list</button>
+    </div>
+
+
+    <div id="skillClockTimer">
+        <div id="time">Let's Go!!!</div>
+        <div id="controls">
+            <button id="start">Start</button>
+            <button id="stop">Stop</button>
+            <button id="save">Save</button>
+            <button id="reset">Reset</button>
+        </div>
+    </div>
+
+    <div id="skillPicture"></div>
+
+
+
+    <script src="skillclock.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</body>
+
+</html>
