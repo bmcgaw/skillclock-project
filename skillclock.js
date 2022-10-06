@@ -1,3 +1,25 @@
+// // Import the functions you need from the SDKs you need
+// type = "module";
+// import { initializeApp } from "firebase/app";
+// import { getAnalytics } from "firebase/analytics";
+// // TODO: Add SDKs for Firebase products that you want to use
+// // https://firebase.google.com/docs/web/setup#available-libraries
+
+// // Your web app's Firebase configuration
+// // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+// const firebaseConfig = {
+//     apiKey: "AIzaSyDWMfUinGcVenX73QTkue6ck2A6Ni4IToY",
+//     authDomain: "skillclock-b4b41.firebaseapp.com",
+//     projectId: "skillclock-b4b41",
+//     storageBucket: "skillclock-b4b41.appspot.com",
+//     messagingSenderId: "179768779495",
+//     appId: "1:179768779495:web:c26ecb74dbdb390d22f842",
+//     measurementId: "G-WP2N24HPPW"
+// };
+
+// // Initialize Firebase
+// const app = initializeApp(firebaseConfig);
+// const analytics = getAnalytics(app);
 
 const list = document.querySelector('ul');
 const skillAdd = document.getElementById("skillAdded");
@@ -29,9 +51,6 @@ form.addEventListener('submit', async function (e) {
     }
 })
 
-const timeKeeper = document.getElementsByClassName('trackedTime');
-timeKeeper.innerText = "Festivus";
-
 //Button to add skill to list
 const add_btn = document.getElementById('add');
 add_btn.addEventListener('click', () => {
@@ -43,57 +62,15 @@ add_btn.addEventListener('click', () => {
 });
 
 
-
 //Button to remove skill from the list
 const remove_btn = document.getElementById('remove');
 remove_btn.addEventListener('click', function deleteSkill() {
     for (let i = 0; i <= checkBoxes.length; i++) {
         if (checkBoxes[i].checked === true) {
             checkBoxes[i].parentElement.remove();
-
         }
     }
 });
-
-//Time tracker
-// const timeElapsed = document.querySelector('#skillClockTimer #time');
-// const start_btn = document.getElementById("start");
-// const stop_btn = document.getElementById("stop");
-// const reset_btn = document.getElementById("reset");
-
-// let seconds = 0;
-// let interval = null;
-
-// start_btn.addEventListener('click', function start() {
-//     if (interval) {
-//         return
-//     } interval = setInterval(timer, 1000);
-// });
-
-// stop_btn.addEventListener("click", function stop() {
-//     clearInterval(interval);
-//     interval = null;
-// });
-
-// reset_btn.addEventListener("click", function reset() {
-//     stop();
-//     seconds = 0;
-//     timeElapsed.innerText = "00:00:00";
-// });
-
-// function timer() {
-//     seconds++;
-
-//     let hrs = Math.floor(seconds / 3600);
-//     let mins = Math.floor((seconds - (hrs * 3600)) / 60);
-//     let secs = seconds % 60;
-
-//     if (secs < 10) { secs = "0" + secs; }
-//     if (mins < 10) { mins = "0" + mins; }
-//     if (hrs < 10) { hrs = "0" + hrs; }
-
-//     timeElapsed.innerText = `${hrs}:${mins}:${secs}`;
-// }
 
 const start_btn = document.getElementById('start');
 const stop_btn = document.getElementById('stop');
@@ -128,6 +105,7 @@ save_btn.addEventListener('click', function save() {
 reset_btn.addEventListener('click', function reset() {
     stop();
     minutes = 0;
+    seconds = 0;
     time.innerText = "Let's Go!!!";
 })
 
