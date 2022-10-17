@@ -12,8 +12,6 @@ h1 {
 }
 
 #stop {
-    margin-left: 25px;
-    margin-right: 25px;
     width: 100px;
     height: 40px;
     font-size: 1em;
@@ -91,7 +89,7 @@ h1 {
     float: right;
     text-align: center;
     position: absolute;
-    margin-left: 875px;
+    margin-left: 850px;
 }
 
 .skillList {
@@ -99,8 +97,8 @@ h1 {
 }
 
 #skillPicture {
-    width: 550px;
-    height: 400px;
+    width: 450px;
+    height: 300px;
     border: 2px black solid;
     display: block;
     margin-top: 0;
@@ -113,9 +111,9 @@ body {
     background-color: darkblue;
 }
 
-#savedTime {
+/* #savedTime {
     background-color: magenta;
     color: white;
     height: 100px;
     width: 100px;
-}
+} */

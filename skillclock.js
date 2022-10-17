@@ -1,5 +1,4 @@
 // // Import the functions you need from the SDKs you need
-// type = "module";
 // import { initializeApp } from "firebase/app";
 // import { getAnalytics } from "firebase/analytics";
 // // TODO: Add SDKs for Firebase products that you want to use
@@ -30,43 +29,34 @@ const form = document.getElementById('typedWords');
 const timeTime = document.getElementById('savedTime');
 
 
-
-//API call for a photo of specific skill
 form.addEventListener('submit', async function (e) {
     try {
         e.preventDefault()
         const picHolder = document.getElementById('skillPicture');
-        const skillies = form.elements.newskill.value;
+        let skillies = form.elements.newskill.value;
         const res = await axios.get(`https://pixabay.com/api/?key=30040769-6ee627b58a0448d5e4295dfbd&q=${skillies}`)
         const picture = res.data.hits[0].largeImageURL;
-        const img = document.createElement('img');
-        img.src = picture;
-        img.height = 400;
-        img.width = 550;
-        picHolder.append(img);
+        const newSkill = document.createElement('li');
+        newSkill.innerHTML = `<label class="labels" style="color: lime; font-size: 3em; vertical-align: middle; margin-right: 20px;"><input type="checkbox" class="checkboxes">${skillAdd.value}
+        <img style="height: 200px; width: 350px display: inline-block; margin-right: 20px;" src=${picture}></img><div style="text-align: center; background-color: darkblue; color: white; height: 150px;
+        width: 250px; display: inline-block;"></div></label>`;
+        list.appendChild(newSkill);
+        skillAdd.value = "";
     }
     catch {
         e.preventDefault();
-        const error = skillPicture.innerHTML = "Sorry no photo"
+        const newSkill = document.createElement('li');
+        newSkill.innerHTML = `<div style="height: 100px; width: 100px; background-color: white; color: black;">Try again!</div>`;
+        list.appendChild(newSkill);
+        skillAdd.value = "";
     }
 })
 
-//Button to add skill to list
-const add_btn = document.getElementById('add');
-add_btn.addEventListener('click', () => {
-    const newSkill = document.createElement('li');
-    newSkill.innerHTML = `<label class="labels" style="color: lime; font-size: 2em;"><input type="checkbox" class="checkboxes">${skillAdd.value}
-    </label>`
-    list.appendChild(newSkill);
-    return newSkill;
-});
 
-
-//Button to remove skill from the list
 const remove_btn = document.getElementById('remove');
 remove_btn.addEventListener('click', function deleteSkill() {
     for (let i = 0; i <= checkBoxes.length; i++) {
-        if (checkBoxes[i].checked === true) {
+        if (checkBoxes[i].checked) {
             checkBoxes[i].parentElement.remove();
         }
     }
@@ -97,9 +87,14 @@ stop_btn.addEventListener('click', function stop() {
 });
 
 save_btn.addEventListener('click', function save() {
-    totalHours.push(minutes);
-    savedTime.innerText = totalHours.reduce((a, b) => a + b);
-    console.log(totalHours);
+    for (let i = 0; i <= checkBoxes.length; i++) {
+        if (checkBoxes[i].checked) {
+            let totalHours = [];
+            totalHours.push(minutes);
+            let toteTime = totalHours.reduce((a, b) => (a + b)) / 60;
+            checkBoxes[i].nextSibling.nextSibling.nextSibling.innerText = `${toteTime.toFixed(2)} HRS`;
+        }
+    }
 })
 
 reset_btn.addEventListener('click', function reset() {
@@ -119,19 +114,5 @@ function timer() {
         minutes = 0;
         hours++;
     }
-    time.innerText = minutes;
+    time.innerText = `${minutes} MIN`;
 }
-
-
-
-
-
-
-
-//Add CSS to app
-//Make API call for pictures and link those pictues to
-//the value of the skill typed in
-//Add feature to select specific skill to start timer for
-//After timer is stopped add feature to add that time to skill total
-//Make API call to time and/or weather API
-//Add an option to remove a skill 
