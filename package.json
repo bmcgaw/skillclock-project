@@ -1,0 +1,28 @@
+{
+  "name": "skill-clock",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bmcgaw/skillclock-project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bmcgaw/skillclock-project/issues"
+  },
+  "homepage": "https://github.com/bmcgaw/skillclock-project#readme",
+  "devDependencies": {
+    "webpack-cli": "^4.10.0",
+    "webpack-dev-server": "^4.11.1"
+  },
+  "dependencies": {
+    "firebase": "^9.12.1",
+    "himalaya": "^1.1.0"
+  }
+}
