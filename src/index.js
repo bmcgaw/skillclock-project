@@ -52,7 +52,6 @@ form.addEventListener('submit', async function (e) {
         time_skill_arr.push(skillAdd.value);
         time_skill_arr.push(starting_time);
         master_data_arr.push(time_skill_arr);
-        console.log(master_data_arr);
         skillAdd.value = "";
     }
     catch {
@@ -82,6 +81,7 @@ const reset_btn = document.getElementById('reset');
 const time = document.getElementById('time');
 
 let seconds = 0;
+let secs = 0;
 let minutes = 0;
 let hours = 0;
 let interval = null;
@@ -98,9 +98,11 @@ stop_btn.addEventListener('click', function stop() {
 });
 
 save_btn.addEventListener('click', function save() {
+    let practiceTime = (parseInt(hours, 10) + (parseInt(minutes, 10) / 60) + (parseInt(secs, 10) / 3600));
+    console.log(practiceTime);
     for (let i = 0; i < checkBoxes.length; i++) {
         if (checkBoxes[i].checked) {
-            master_data_arr[i][2] += (minutes / 60);
+            master_data_arr[i][2] += practiceTime;
             let savedTime = checkBoxes[i].nextSibling.nextSibling.nextSibling;
             savedTime.innerHTML = `${master_data_arr[i][2].toFixed(2)} HRS`;
         }
@@ -114,23 +116,30 @@ save_btn.addEventListener('click', function save() {
 reset_btn.addEventListener('click', function reset() {
     time.innerHTML = "Let's Go!!!";
     minutes = 0;
+    secs = 0;
+    hours = 0;
     seconds = 0;
     clearInterval(interval);
     interval = null;
 })
 
+
 function timer() {
     seconds++;
-    if (seconds % 60 === 0) {
-        seconds = 0;
-        minutes++;
-    }
-    if (minutes % 60 === 0) {
-        minutes = 0;
-        hours++;
-    }
-    time.innerText = `${minutes} MIN`;
+
+    hours = Math.floor(seconds / 3600);
+    minutes = Math.floor((seconds - (hours * 3600)) / 60);
+    secs = seconds % 60;
+
+    if (secs < 10) secs = '0' + secs;
+    if (minutes < 10) minutes = '0' + minutes;
+    if (hours < 10) hours = '0' + hours;
+
+    time.innerText = `${hours}:${minutes}:${secs}`;
+
 }
+
+
 
 
 
