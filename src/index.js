@@ -29,11 +29,16 @@ let revamp = window.addEventListener('load', function getData() {
         off(timeAndActivity);
         const data = snapshot.val();
         master_data_arr = data.masterData;
-        console.log("running");
         for (let i = 0; i < master_data_arr.length; i++) {
-            const newSkill = document.createElement('li');
-            newSkill.innerHTML = `<label class="labels" style="color: lime; font-size: 3em; vertical-align: middle; margin-right: 20px;"><input type="checkbox" class="checkboxes">${master_data_arr[i][1]}<img class="images" style="height: 200px; width: 350px display: inline-block; margin-right: 20px; margin-left: 20px;" src=${master_data_arr[i][0]}}></img><div style="text-align: center; background-color: darkblue; color: white; height: 150px; width: 250px; display: inline-block;">${master_data_arr[i][2].toFixed(2)} HRS</div></label>`;
-            list.appendChild(newSkill);
+            console.log(master_data_arr);
+            let aSink = async function () {
+                const newSkill_li = document.createElement('li');
+                const res = await axios.get(`https://pixabay.com/api/?key=30040769-6ee627b58a0448d5e4295dfbd&q=${master_data_arr[i][0]}`);
+                const skill_picture = res.data.hits[0].largeImageURL;
+                newSkill_li.innerHTML = `<label class="labels" style="color: lime; font-size: 3em; vertical-align: middle; margin-right: 20px;"><input type="checkbox" class="checkboxes">${master_data_arr[i][0]}<img class="images" style="height: 200px; width: 350px display: inline-block; margin-right: 20px; margin-left: 20px;" src=${skill_picture}></img><div style="text-align: center; background-color: darkblue; color: white; height: 150px; width: 250px; display: inline-block;">${master_data_arr[i][1].toFixed(2)} HRS</div></label>`;
+                list.appendChild(newSkill_li);
+            }
+            aSink();
         }
     })
 });
@@ -48,10 +53,10 @@ form.addEventListener('submit', async function (e) {
         const starting_time = 0;
         newSkill_li.innerHTML = `<label class="labels" style="color: lime; font-size: 3em; vertical-align: middle; margin-right: 20px;"><input type="checkbox" class="checkboxes">${skillAdd.value}<img class="images" style="height: 200px; width: 350px display: inline-block; margin-right: 20px; margin-left: 20px;" src=${skill_picture}></img><div style="text-align: center; background-color: darkblue; color: white; height: 150px; width: 250px; display: inline-block;">0.00 HRS</div></label>`;
         list.appendChild(newSkill_li);
-        time_skill_arr.push(skill_picture);
         time_skill_arr.push(skillAdd.value);
         time_skill_arr.push(starting_time);
         master_data_arr.push(time_skill_arr);
+        console.log(master_data_arr);
         skillAdd.value = "";
     }
     catch {
@@ -102,9 +107,9 @@ save_btn.addEventListener('click', function save() {
     console.log(practiceTime);
     for (let i = 0; i < checkBoxes.length; i++) {
         if (checkBoxes[i].checked) {
-            master_data_arr[i][2] += practiceTime;
+            master_data_arr[i][1] += practiceTime;
             let savedTime = checkBoxes[i].nextSibling.nextSibling.nextSibling;
-            savedTime.innerHTML = `${master_data_arr[i][2].toFixed(2)} HRS`;
+            savedTime.innerHTML = `${master_data_arr[i][1].toFixed(2)} HRS`;
         }
     }
     (set(ref(db, 'appinfo/'), {
