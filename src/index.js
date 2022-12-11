@@ -85,21 +85,39 @@ const save_btn = document.getElementById('save');
 const reset_btn = document.getElementById('reset');
 const time = document.getElementById('time');
 
-let seconds = 0;
+let startTime = 0;
+let elapsedTime = 0;
+let currentTime = 0;
+let paused = true;
+let intervalId;
 let secs = 0;
 let minutes = 0;
 let hours = 0;
-let interval = null;
 
-start_btn.addEventListener('click', function start() {
-    if (interval) {
-        return
-    } interval = setInterval(timer, 1000);
+start_btn.addEventListener('click', () => {
+    if (paused) {
+        paused = false;
+        startTime = Date.now() - elapsedTime;
+        intervalId = setInterval(updateTime, 1000)
+    }
+})
+stop_btn.addEventListener('click', () => {
+    if (!paused) {
+        paused = true;
+        elapsedTime = Date.now() - startTime;
+        clearInterval(intervalId);
+    }
 });
-
-stop_btn.addEventListener('click', function stop() {
-    clearInterval(interval);
-    interval = null;
+reset_btn.addEventListener('click', () => {
+    paused = true;
+    clearInterval(intervalId);
+    startTime = 0;
+    elapsedTime = 0;
+    currentTime = 0;
+    secs = 0;
+    minutes = 0;
+    hours = 0;
+    time.textContent = "Let's Go!!!";
 });
 
 save_btn.addEventListener('click', function save() {
@@ -118,31 +136,25 @@ save_btn.addEventListener('click', function save() {
     ))
 });
 
-reset_btn.addEventListener('click', function reset() {
-    time.innerHTML = "Let's Go!!!";
-    minutes = 0;
-    secs = 0;
-    hours = 0;
-    seconds = 0;
-    clearInterval(interval);
-    interval = null;
-})
+function updateTime() {
 
+    elapsedTime = Date.now() - startTime;
 
-function timer() {
-    seconds++;
+    secs = Math.floor((elapsedTime / 1000) % 60);
+    minutes = Math.floor((elapsedTime / (1000 * 60)) % 60);
+    hours = Math.floor((elapsedTime / (1000 * 60 * 60)) % 60);
 
-    hours = Math.floor(seconds / 3600);
-    minutes = Math.floor((seconds - (hours * 3600)) / 60);
-    secs = seconds % 60;
+    secs = display(secs);
+    minutes = display(minutes);
+    hours = display(hours);
 
-    if (secs < 10) secs = '0' + secs;
-    if (minutes < 10) minutes = '0' + minutes;
-    if (hours < 10) hours = '0' + hours;
+    time.textContent = `${hours}:${minutes}:${secs}`;
 
-    time.innerText = `${hours}:${minutes}:${secs}`;
+    function display(num) {
+        return (('0') + num).length > 2 ? num : "0" + num;
+    }
 
-}
+};
 
 
 
